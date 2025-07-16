@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LWEE FILM</title>
+    <title>CHINE FILM</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { 
             font-family: 'Inter', sans-serif; 
-            background: #414040; 
-            color: #ffffff; 
+            background: #ffffff; 
+            color: #000000; 
             line-height: 1.3; 
         }
 
@@ -22,10 +22,10 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(65, 64, 64, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(25px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
 
         .nav {
@@ -33,78 +33,28 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 60px;
+            height: 50px;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 20px; }
+        .nav-left { display: flex; align-items: center; }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
-
-        .logo-image {
-            height: 40px;
-            width: auto;
-            max-width: 120px;
-            object-fit: contain;
-        }
-
-        .logo-text {
+        .logo {
             font-size: 14px;
             font-weight: 900;
-            color: #ffffff;
+            color: #000000;
             text-decoration: none;
             text-transform: uppercase;
             cursor: pointer;
         }
 
-        .logo-upload-btn {
-            display: none;
-            background: none;
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            padding: 4px 8px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin-left: 8px;
-        }
-
-        .logo-upload-btn:hover {
-            background: #ffffff;
-            color: #414040;
-        }
-
-        .admin-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            padding: 8px 12px;
-            font-size: 10px;
-            cursor: pointer;
-            z-index: 2000;
-            border-radius: 4px;
-        }
-
-        .admin-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
         .nav-menu {
             display: flex;
             list-style: none;
-            margin-left: 40px;
+            margin-left: 60px;
         }
 
         .nav-link {
-            color: #ffffff;
+            color: #000000;
             text-decoration: none;
             font-size: 13px;
             padding: 15px 20px;
@@ -116,8 +66,8 @@
 
         .cart-btn {
             background: none;
-            border: 1px solid #ffffff;
-            color: #ffffff;
+            border: 1px solid #000000;
+            color: #000000;
             padding: 8px 16px;
             font-size: 11px;
             font-weight: 600;
@@ -127,7 +77,7 @@
             position: relative;
         }
 
-        .cart-btn:hover { background: #ffffff; color: #414040; }
+        .cart-btn:hover { background: #000000; color: #ffffff; }
 
         .cart-count {
             position: absolute;
@@ -149,7 +99,7 @@
             position: relative;
             height: 100vh;
             min-height: 500px;
-            margin-top: 60px;
+            margin-top: 50px;
             overflow: hidden;
         }
 
@@ -328,18 +278,18 @@
         .section-title {
             font-size: 32px;
             font-weight: 800;
-            color: #ffffff;
+            color: #000000;
             letter-spacing: -1px;
         }
 
         .section-subtitle {
-            color: #cccccc;
+            color: #666666;
             font-size: 16px;
             margin-top: 8px;
         }
 
         .section-link {
-            color: #cccccc;
+            color: #666666;
             text-decoration: none;
             font-size: 16px;
             font-weight: 500;
@@ -347,7 +297,7 @@
             cursor: pointer;
         }
 
-        .section-link:hover { color: #ffffff; }
+        .section-link:hover { color: #000000; }
 
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
@@ -365,8 +315,8 @@
 
         .card-image {
             width: 100%;
-            background: #525252;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #f8f8f8;
+            border: 1px solid rgba(0, 0, 0, 0.06);
             margin-bottom: 16px;
             background-size: cover;
             background-position: center;
@@ -390,13 +340,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #999999;
-            background: linear-gradient(135deg, #525252 0%, #484848 100%);
+            color: #cccccc;
+            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
             font-size: 32px;
         }
 
         .movie-status, .product-status, .award-status {
-            color: #cccccc;
+            color: #666666;
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
@@ -408,7 +358,7 @@
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 6px;
-            color: #ffffff;
+            color: #000000;
         }
 
         .product-name {
@@ -416,11 +366,11 @@
             font-weight: 700;
             margin-bottom: 6px;
             line-height: 1.2;
-            color: #ffffff;
+            color: #000000;
         }
 
         .movie-year {
-            color: #cccccc;
+            color: #666666;
             font-size: 16px;
             margin-bottom: 16px;
         }
@@ -428,11 +378,11 @@
         .product-price {
             font-size: 18px;
             font-weight: 800;
-            color: #ffffff;
+            color: #000000;
         }
 
         .product-currency {
-            color: #cccccc;
+            color: #666666;
             font-size: 14px;
             font-weight: 500;
         }
@@ -440,18 +390,18 @@
         .movie-buttons { display: flex; gap: 12px; }
 
         .main-content .btn {
-            border-color: #ffffff;
-            color: #ffffff;
+            border-color: #000000;
+            color: #000000;
             padding: 10px 20px;
             font-size: 11px;
         }
 
-        .main-content .btn:hover { background: #ffffff; color: #414040; }
-        .main-content .btn-primary { background: #ffffff; color: #414040; }
-        .main-content .btn-primary:hover { background: transparent; color: #ffffff; }
+        .main-content .btn:hover { background: #000000; color: #ffffff; }
+        .main-content .btn-primary { background: #000000; color: #ffffff; }
+        .main-content .btn-primary:hover { background: transparent; color: #000000; }
 
         .detail-page {
-            margin-top: 60px;
+            margin-top: 50px;
             min-height: 100vh;
         }
 
@@ -904,86 +854,7 @@
 
         .footer-text { color: #666666; font-size: 14px; }
 
-        /* 로고 업로드 관련 스타일 */
-        .logo-upload-area {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 4000;
-            display: none;
-            min-width: 400px;
-        }
-
-        .logo-upload-area.active { display: block; }
-
-        .upload-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3999;
-            display: none;
-        }
-
-        .upload-overlay.active { display: block; }
-
-        .upload-title {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .upload-dropzone {
-            border: 2px dashed #cccccc;
-            border-radius: 8px;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .upload-dropzone:hover,
-        .upload-dropzone.dragover {
-            border-color: #000000;
-            background: #f8f8f8;
-        }
-
-        .upload-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .upload-btn, .cancel-btn {
-            padding: 12px 24px;
-            border: 1px solid #000000;
-            background: transparent;
-            color: #000000;
-            cursor: pointer;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 12px;
-        }
-
-        .upload-btn:hover {
-            background: #000000;
-            color: #ffffff;
-        }
-
-        .cancel-btn:hover {
-            background: #f0f0f0;
-        }
-
-        /* 모바일 최적화 */
+        /* 모바일 최적화 - 768px 이하에서만 적용 */
         @media (max-width: 768px) {
             .nav-menu { display: none; }
             .slide-content { padding: 0 24px; }
@@ -998,6 +869,7 @@
             .section-title { font-size: 24px; margin-bottom: 4px; }
             .section-subtitle { font-size: 14px; }
             
+            /* 모바일 그리드 - 2-3열로 깔끔하게 정리 */
             .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .grid-5 { grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -1049,13 +921,12 @@
             .cart-header { padding: 20px; }
             .cart-items { padding: 20px; }
             .cart-total { padding: 20px; }
-            
-            .logo-upload-area { min-width: 300px; padding: 30px 20px; }
         }
 
+        /* 480px 이하 - 더 작은 화면 */
         @media (max-width: 480px) {
             .nav { padding: 0 16px; height: 60px; }
-            .logo-text { font-size: 12px; }
+            .logo { font-size: 12px; }
             .cart-btn { padding: 6px 12px; font-size: 10px; }
             .hero-slider { margin-top: 60px; }
             .slide-content { padding: 0 16px; }
@@ -1076,12 +947,9 @@
             .about-description { font-size: 14px; }
             .stat-number { font-size: 24px; }
             .stat-label { font-size: 11px; }
-            
-            .logo-upload-area { min-width: 280px; padding: 20px 15px; }
-            .upload-title { font-size: 20px; }
-            .upload-dropzone { padding: 30px 15px; }
         }
 
+        /* 터치 디바이스 최적화 */
         @media (hover: none) and (pointer: coarse) {
             .card:hover { transform: none; }
             .btn:hover { background: inherit; color: inherit; }
@@ -1095,31 +963,10 @@
     </style>
 </head>
 <body>
-    <!-- 로고 업로드 오버레이 -->
-    <div class="upload-overlay" id="upload-overlay" onclick="closeLogoUpload()"></div>
-    <div class="logo-upload-area" id="logo-upload-area">
-        <h3 class="upload-title">로고 업로드</h3>
-        <div class="upload-dropzone" id="upload-dropzone" onclick="document.getElementById('logo-file-input').click()">
-            <p>이미지를 드래그하거나 클릭하여 업로드하세요</p>
-            <small>PNG, JPG, SVG 파일 지원 (최대 2MB)</small>
-        </div>
-        <input type="file" id="logo-file-input" accept="image/*" style="display: none;" onchange="handleLogoUpload(event)">
-        <div class="upload-buttons">
-            <button class="cancel-btn" onclick="closeLogoUpload()">취소</button>
-        </div>
-    </div>
-
-    <!-- 관리자 모드 토글 버튼 -->
-    <button class="admin-toggle" onclick="toggleAdminMode()">관리자 모드</button>
-
     <header class="header">
         <nav class="nav">
             <div class="nav-left">
-                <div class="logo-container" onclick="showPage('home')">
-                    <img class="logo-image" id="logo-image" src="" alt="" style="display: none;">
-                    <span class="logo-text" id="logo-text">LWEE FILM</span>
-                    <button class="logo-upload-btn" id="logo-upload-btn" onclick="openLogoUpload()">로고 변경</button>
-                </div>
+                <a class="logo" onclick="showPage('home')">CHINE FILM</a>
                 <ul class="nav-menu">
                     <li><a class="nav-link" onclick="showSection('about')">About</a></li>
                     <li><a class="nav-link" onclick="showSection('movies')">Films</a></li>
@@ -1187,12 +1034,12 @@
         <main class="main-content">
             <section class="about-section" id="about">
                 <div class="about-content">
-                    <h2 class="about-title">LWEE FILM</h2>
+                    <h2 class="about-title">CHINE FILM</h2>
                     <p class="about-subtitle">
                         창의적인 스토리텔링으로 세상을 변화시키는 독립 영화 제작사
                     </p>
                     <div class="about-description">
-                        <p>LWEE FILM은 2020년에 설립된 독립 영화 제작사로, 혁신적이고 의미 있는 콘텐츠를 통해 관객들에게 새로운 시각과 감동을 전달하고 있습니다. 우리는 다양한 장르와 스타일을 아우르며, 신진 감독들과 함께 창작의 경계를 넓혀가고 있습니다.</p>
+                        <p>CHINE FILM은 2020년에 설립된 독립 영화 제작사로, 혁신적이고 의미 있는 콘텐츠를 통해 관객들에게 새로운 시각과 감동을 전달하고 있습니다. 우리는 다양한 장르와 스타일을 아우르며, 신진 감독들과 함께 창작의 경계를 넓혀가고 있습니다.</p>
                         
                         <p>각 작품은 단순한 엔터테인먼트를 넘어서 사회적 메시지와 인간의 본질에 대한 깊이 있는 탐구를 담고 있습니다. 디아스포라, 어항과 같은 대표작들을 통해 현대 사회의 복잡한 이슈들을 섬세하게 다루며, 국내외 영화제에서 주목받는 작품들을 지속적으로 선보이고 있습니다.</p>
                     </div>
@@ -1391,7 +1238,7 @@
 
         <footer class="footer">
             <div class="footer-content">
-                <p class="footer-text">LWEE FILM © 2024. All Rights Reserved</p>
+                <p class="footer-text">CHINE FILM © 2024. All Rights Reserved</p>
             </div>
         </footer>
     </div>
@@ -1481,7 +1328,6 @@
         let currentProduct = null;
         let currentTrailerMovie = null;
         let slideInterval;
-        let isAdminMode = false;
 
         const products = {
             'diaspora-hoodie': {
@@ -1586,137 +1432,19 @@
             }
         };
 
-        // 관리자 모드 토글
-        function toggleAdminMode() {
-            isAdminMode = !isAdminMode;
-            const logoUploadBtn = document.getElementById('logo-upload-btn');
-            const adminToggle = document.querySelector('.admin-toggle');
-            
-            if (isAdminMode) {
-                logoUploadBtn.style.display = 'inline-block';
-                adminToggle.textContent = '일반 모드';
-                adminToggle.style.background = 'rgba(255, 0, 0, 0.1)';
-                adminToggle.style.borderColor = 'rgba(255, 0, 0, 0.3)';
-            } else {
-                logoUploadBtn.style.display = 'none';
-                adminToggle.textContent = '관리자 모드';
-                adminToggle.style.background = 'rgba(255, 255, 255, 0.1)';
-                adminToggle.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-            }
-        }
-
-        // 로고 업로드 관련 함수들
-        function openLogoUpload() {
-            if (!isAdminMode) return;
-            
-            document.getElementById('upload-overlay').classList.add('active');
-            document.getElementById('logo-upload-area').classList.add('active');
-        }
-
-        function closeLogoUpload() {
-            document.getElementById('upload-overlay').classList.remove('active');
-            document.getElementById('logo-upload-area').classList.remove('active');
-        }
-
-        function handleLogoUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            // 파일 크기 체크 (2MB)
-            if (file.size > 2 * 1024 * 1024) {
-                alert('파일 크기가 2MB를 초과합니다.');
-                return;
-            }
-
-            // 파일 타입 체크
-            if (!file.type.startsWith('image/')) {
-                alert('이미지 파일만 업로드 가능합니다.');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const logoImage = document.getElementById('logo-image');
-                const logoText = document.getElementById('logo-text');
-                
-                logoImage.src = e.target.result;
-                logoImage.style.display = 'block';
-                logoText.style.display = 'none';
-                
-                // 로컬 스토리지에 저장 (실제 서비스에서는 서버 업로드 필요)
-                localStorage.setItem('lweeFilmLogo', e.target.result);
-                
-                closeLogoUpload();
-                alert('로고가 성공적으로 업로드되었습니다!');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // 드래그 앤 드롭 기능
-        function setupDragAndDrop() {
-            const dropzone = document.getElementById('upload-dropzone');
-            
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropzone.addEventListener(eventName, preventDefaults, false);
-            });
-
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropzone.addEventListener(eventName, highlight, false);
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropzone.addEventListener(eventName, unhighlight, false);
-            });
-
-            function highlight(e) {
-                dropzone.classList.add('dragover');
-            }
-
-            function unhighlight(e) {
-                dropzone.classList.remove('dragover');
-            }
-
-            dropzone.addEventListener('drop', handleDrop, false);
-
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files.length > 0) {
-                    const event = { target: { files: [files[0]] } };
-                    handleLogoUpload(event);
-                }
-            }
-        }
-
-        // 페이지 로드 시 저장된 로고 불러오기
-        function loadSavedLogo() {
-            const savedLogo = localStorage.getItem('lweeFilmLogo');
-            if (savedLogo) {
-                const logoImage = document.getElementById('logo-image');
-                const logoText = document.getElementById('logo-text');
-                
-                logoImage.src = savedLogo;
-                logoImage.style.display = 'block';
-                logoText.style.display = 'none';
-            }
-        }
-
         function showPage(pageId) {
+            // 모든 페이지 비활성화
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             
+            // 지정된 페이지만 활성화
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.add('active');
             }
             
+            // 홈페이지로 이동할 때 슬라이더 리셋
             if (pageId === 'home') {
                 setTimeout(() => {
                     currentSlide = 0;
@@ -1731,6 +1459,7 @@
                     
                     updateSliderCounter();
                     updateSliderButtons();
+                    console.log('Reset to first slide - The Diaspora');
                 }, 100);
             }
         }
@@ -1777,14 +1506,24 @@
         }
 
         function showTrailer(movieId) {
+            console.log('=== showTrailer called ===');
+            console.log('Requested movieId:', movieId);
+            
             const movie = movies[movieId];
-            if (!movie) return;
+            if (!movie) {
+                console.error('Movie not found for ID:', movieId);
+                console.log('Available movies:', Object.keys(movies));
+                return;
+            }
 
+            console.log('Found movie:', movie.title);
             currentTrailerMovie = movieId;
             
+            // 트레일러 헤더 업데이트
             document.getElementById('trailer-info').textContent = movie.title.toUpperCase();
             document.getElementById('trailer-movie-title').textContent = `${movie.title} 트레일러`;
             
+            // 비디오 플레이어 초기화
             const videoPlayer = document.getElementById('video-player');
             videoPlayer.innerHTML = `
                 <div class="video-placeholder" id="video-placeholder" onclick="playTrailer()">
@@ -1794,12 +1533,22 @@
                 </div>
             `;
             
+            console.log('Trailer page setup complete for:', movie.title);
             showPage('trailer-page');
         }
 
         function playTrailer() {
+            console.log('=== playTrailer called ===');
+            console.log('Current trailer movie:', currentTrailerMovie);
+            
             const movie = movies[currentTrailerMovie];
-            if (!movie) return;
+            if (!movie) {
+                console.error('No movie found for currentTrailerMovie:', currentTrailerMovie);
+                return;
+            }
+
+            console.log('Playing trailer for:', movie.title);
+            console.log('Trailer embed URL:', movie.trailerEmbed);
 
             const videoPlayer = document.getElementById('video-player');
             videoPlayer.innerHTML = `
@@ -1943,7 +1692,7 @@
             dots[currentSlide].classList.add('active');
             
             updateSliderCounter();
-            updateSliderButtons();
+            updateSliderButtons(); // 새로 추가
             resetSliderProgress();
         }
 
@@ -1960,7 +1709,7 @@
             dots[currentSlide].classList.add('active');
             
             updateSliderCounter();
-            updateSliderButtons();
+            updateSliderButtons(); // 새로 추가
             resetSliderProgress();
         }
 
@@ -1977,7 +1726,7 @@
             dots[currentSlide].classList.add('active');
             
             updateSliderCounter();
-            updateSliderButtons();
+            updateSliderButtons(); // 새로 추가
             resetSliderProgress();
         }
 
@@ -1985,32 +1734,45 @@
             document.querySelector('.current-slide').textContent = currentSlide + 1;
         }
 
+        // 새로 추가된 함수 - 더 확실한 버튼 설정
         function updateSliderButtons() {
+            console.log('=== updateSliderButtons called ===');
             const slides = document.querySelectorAll('.slide');
             
+            // 각 슬라이드별로 버튼 설정
             slides.forEach((slide, index) => {
                 const slideMovieId = slide.getAttribute('data-movie');
                 const watchBtn = slide.querySelector('.slide-watch-btn');
                 const trailerBtn = slide.querySelector('.slide-trailer-btn');
                 
+                console.log(`Slide ${index}: movieId=${slideMovieId}`);
+                
                 if (watchBtn) {
+                    // 기존 이벤트 리스너 제거
                     watchBtn.onclick = null;
+                    // 새 이벤트 리스너 추가
                     watchBtn.addEventListener('click', function(e) {
                         e.preventDefault();
                         e.stopPropagation();
+                        console.log('Watch button clicked for:', slideMovieId);
                         showMovieDetail(slideMovieId);
                     });
                 }
                 
                 if (trailerBtn) {
+                    // 기존 이벤트 리스너 제거
                     trailerBtn.onclick = null;
+                    // 새 이벤트 리스너 추가
                     trailerBtn.addEventListener('click', function(e) {
                         e.preventDefault();
                         e.stopPropagation();
+                        console.log('Trailer button clicked for:', slideMovieId);
                         showTrailer(slideMovieId);
                     });
                 }
             });
+            
+            console.log('Current active slide index:', currentSlide);
         }
 
         function resetSliderProgress() {
@@ -2032,27 +1794,42 @@
                 if (progress >= 100) {
                     nextSlide();
                 }
-            }, 80);
+            }, 80); // 8 seconds total (100 * 80ms)
         }
 
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== Page loading ===');
+            
+            // 페이지 로드 시 강제로 홈페이지로 리셋
             showPage('home');
             
+            // 슬라이더를 첫 번째 슬라이드로 강제 리셋
             currentSlide = 0;
             const slides = document.querySelectorAll('.slide');
             const dots = document.querySelectorAll('.dot');
             
+            console.log('Found slides:', slides.length);
+            console.log('Found dots:', dots.length);
+            
+            // 모든 슬라이드와 닷을 비활성화
             slides.forEach((slide, index) => {
                 slide.classList.remove('active');
+                console.log(`Slide ${index} data-movie:`, slide.getAttribute('data-movie'));
             });
             dots.forEach(dot => dot.classList.remove('active'));
             
-            if (slides[0]) slides[0].classList.add('active');
+            // 첫 번째 슬라이드와 닷만 활성화
+            if (slides[0]) {
+                slides[0].classList.add('active');
+                console.log('Activated first slide:', slides[0].getAttribute('data-movie'));
+            }
             if (dots[0]) dots[0].classList.add('active');
             
+            // 슬라이더 카운터 업데이트
             updateSliderCounter();
             
+            // 초기 슬라이더 버튼 설정 (약간의 지연 후)
             setTimeout(() => {
                 updateSliderButtons();
             }, 100);
@@ -2073,12 +1850,6 @@
                     if (trailerPage.classList.contains('active')) {
                         closeTrailer();
                     }
-                    
-                    // ESC로 로고 업로드 모달 닫기
-                    const uploadArea = document.getElementById('logo-upload-area');
-                    if (uploadArea.classList.contains('active')) {
-                        closeLogoUpload();
-                    }
                 }
             });
             
@@ -2092,11 +1863,8 @@
                 }
             });
             
-            // 드래그 앤 드롭 설정
-            setupDragAndDrop();
-            
-            // 저장된 로고 불러오기
-            loadSavedLogo();
+            console.log('=== Page initialization complete ===');
+            console.log('Current slide:', currentSlide);
         });
     </script>
 </body>
