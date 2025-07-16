@@ -3,309 +3,2101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LWEE FILM - 영화 제작 스튜디오</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>LWEE FILM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #414040; 
+            color: #ffffff; 
+            line-height: 1.3; 
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(65, 64, 64, 0.95);
+            backdrop-filter: blur(25px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-image {
+            height: 40px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 14px;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .logo-upload-btn {
+            display: none;
+            background: none;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .logo-upload-btn:hover {
+            background: #ffffff;
+            color: #414040;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 8px 12px;
+            font-size: 10px;
+            cursor: pointer;
+            z-index: 2000;
+            border-radius: 4px;
+        }
+
+        .admin-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin-left: 40px;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 15px 20px;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover { opacity: 0.6; }
+
+        .cart-btn {
+            background: none;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cart-btn:hover { background: #ffffff; color: #414040; }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff0000;
+            color: #ffffff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .hero-slider {
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            margin-top: 60px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slide:nth-child(1) {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('https://raw.githubusercontent.com/yonseiarts/chine-film-images/main/diaspora2.jpg') center/cover;
+        }
+
+        .slide:nth-child(2) {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)),
+                        url('https://raw.githubusercontent.com/yonseiarts/chine-film-images/main/Fish bowl2.jpg') center/cover;
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            padding: 0 60px;
+            margin: 0 auto;
+        }
+
+        .slide-info { 
+            color: #ffffff; 
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+        }
+
+        .slide-status {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slide-title {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 0.9;
+            margin-bottom: 16px;
+            color: #ffffff;
+            letter-spacing: -2px;
+        }
+
+        .slide-year {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+
+        .slide-buttons { display: flex; gap: 16px; }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 2px solid #ffffff;
+            background: transparent;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover { background: #ffffff; color: #000000; }
+        .btn-primary { background: #ffffff; color: #000000; }
+        .btn-primary:hover { background: transparent; color: #ffffff; }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .slider-counter {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .slider-timeline {
+            position: relative;
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .slider-dots { display: flex; gap: 12px; }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active { background: #ffffff; transform: scale(1.3); }
+
+        .slider-nav { display: flex; gap: 8px; }
+
+        .nav-btn {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .content-section {
+            margin-bottom: 80px;
+            padding-top: 80px;
+        }
+
+        .content-section:first-child {
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            color: #cccccc;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .section-link {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .section-link:hover { color: #ffffff; }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+        .grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+
+        .card {
+            background: transparent;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card:hover { transform: translateY(-8px); }
+
+        .card-image {
+            width: 100%;
+            background: #525252;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .movie-image { aspect-ratio: 2/3; }
+        .product-image { height: 240px; }
+        .award-image { aspect-ratio: 2/3; }
+
+        .movie-image.diaspora { background-image: url('https://raw.githubusercontent.com/yonseiarts/chine-film-images/main/diaspora2.jpg'); }
+        .movie-image.fishbowl { background-image: url('https://raw.githubusercontent.com/yonseiarts/chine-film-images/main/Fish bowl2.jpg'); }
+        .movie-image.spring-dreams { background-image: url('https://picsum.photos/400/600?random=7'); }
+        .movie-image.urban-tales { background-image: url('https://picsum.photos/400/600?random=8'); }
+        .movie-image.memories { background-image: url('https://picsum.photos/400/600?random=9'); }
+        .movie-image.silence { background-image: url('https://picsum.photos/400/600?random=10'); }
+        .movie-image.journey { background-image: url('https://picsum.photos/400/600?random=11'); }
+
+        .card-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999999;
+            background: linear-gradient(135deg, #525252 0%, #484848 100%);
+            font-size: 32px;
+        }
+
+        .movie-status, .product-status, .award-status {
+            color: #cccccc;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .movie-title, .award-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+
+        .movie-year {
+            color: #cccccc;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .product-currency {
+            color: #cccccc;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .movie-buttons { display: flex; gap: 12px; }
+
+        .main-content .btn {
+            border-color: #ffffff;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 11px;
+        }
+
+        .main-content .btn:hover { background: #ffffff; color: #414040; }
+        .main-content .btn-primary { background: #ffffff; color: #414040; }
+        .main-content .btn-primary:hover { background: transparent; color: #ffffff; }
+
+        .detail-page {
+            margin-top: 60px;
+            min-height: 100vh;
+        }
+
+        .detail-hero {
+            position: relative;
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+        }
+
+        .detail-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            color: #ffffff;
+        }
+
+        .detail-title {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .detail-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+
+        .detail-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            padding: 12px 24px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover { background: rgba(255, 255, 255, 0.3); }
+
+        .product-detail {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .product-image-large {
+            width: 100%;
+            height: 600px;
+            background: #f8f8f8;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-info h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #000000;
+        }
+
+        .product-price-large {
+            font-size: 32px;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 32px;
+        }
+
+        .product-description {
+            color: #666666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .quantity-label {
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+
+        .quantity-btn:hover { background: rgba(0, 0, 0, 0.1); }
+
+        .quantity-input {
+            border: none;
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .add-to-cart-btn {
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .add-to-cart-btn:hover { background: transparent; color: #000000; }
+
+        .about-section {
+            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+            padding: 120px 0;
+            margin-bottom: 0;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+            text-align: center;
+        }
+
+        .about-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .about-subtitle {
+            font-size: 20px;
+            color: #666666;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .about-description {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 48px;
+            text-align: left;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            margin-top: 64px;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-size: 40px;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .trailer-page {
+            background: #000000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 3000;
+            display: none;
+        }
+
+        .trailer-page.active { display: flex; flex-direction: column; }
+
+        .trailer-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3001;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .trailer-controls { display: flex; gap: 16px; }
+
+        .trailer-close, .trailer-minimize {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border-radius: 4px;
+        }
+
+        .trailer-close:hover, .trailer-minimize:hover { background: rgba(255, 255, 255, 0.2); }
+
+        .trailer-info {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 100vh;
+            background: #000000;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 24px;
+            background: linear-gradient(45deg, #111111, #222222);
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover { background: linear-gradient(45deg, #222222, #333333); }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            color: #000000;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-button:hover { background: #ffffff; transform: scale(1.1); }
+
+        .video-element {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        iframe.video-element { border: none; }
+
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-modal.active { display: flex; }
+
+        .cart-content {
+            background: #ffffff;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .cart-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-items { padding: 24px 32px; }
+
+        .cart-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background: #f8f8f8;
+            border-radius: 4px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cart-item-info { flex: 1; }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .cart-total {
+            padding: 24px 32px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: right;
+        }
+
+        .cart-total-price {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .checkout-btn {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: #666666;
+        }
+
+        .footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 40px 0;
+            margin-top: 120px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-text { color: #666666; font-size: 14px; }
+
+        /* 로고 업로드 관련 스타일 */
+        .logo-upload-area {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 4000;
+            display: none;
+            min-width: 400px;
+        }
+
+        .logo-upload-area.active { display: block; }
+
+        .upload-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3999;
+            display: none;
+        }
+
+        .upload-overlay.active { display: block; }
+
+        .upload-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .upload-dropzone {
+            border: 2px dashed #cccccc;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-dropzone:hover,
+        .upload-dropzone.dragover {
+            border-color: #000000;
+            background: #f8f8f8;
+        }
+
+        .upload-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .upload-btn, .cancel-btn {
+            padding: 12px 24px;
+            border: 1px solid #000000;
+            background: transparent;
+            color: #000000;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .upload-btn:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .cancel-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .slide-content { padding: 0 24px; }
+            .slide-title { font-size: 36px; line-height: 1.1; }
+            .slide-year { font-size: 16px; margin-bottom: 24px; }
+            .slide-buttons { flex-direction: column; gap: 12px; max-width: 300px; }
+            .slide-buttons .btn { text-align: center; padding: 12px 24px; }
+            
+            .main-content { padding: 0 20px; }
+            .content-section { margin-bottom: 50px; padding-top: 50px; }
+            .section-header { margin-bottom: 24px; flex-direction: column; align-items: flex-start; gap: 8px; }
+            .section-title { font-size: 24px; margin-bottom: 4px; }
+            .section-subtitle { font-size: 14px; }
+            
+            .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .grid-5 { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+            .grid-auto { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            
+            .card { margin-bottom: 8px; }
+            .card-image { margin-bottom: 8px; }
+            .movie-title, .award-title { font-size: 13px; margin-bottom: 4px; }
+            .product-name { font-size: 12px; margin-bottom: 4px; }
+            .movie-year { font-size: 11px; margin-bottom: 8px; }
+            .product-price { font-size: 13px; }
+            .movie-buttons { gap: 6px; }
+            .main-content .btn { padding: 6px 12px; font-size: 9px; }
+            
+            .about-section { padding: 60px 0; }
+            .about-content { padding: 0 20px; }
+            .about-title { font-size: 28px; margin-bottom: 16px; }
+            .about-subtitle { font-size: 16px; margin-bottom: 24px; }
+            .about-description { font-size: 14px; line-height: 1.6; text-align: center; }
+            .about-stats { grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+            .stat-number { font-size: 28px; }
+            .stat-label { font-size: 12px; }
+            
+            .slider-controls { 
+                bottom: 20px; 
+                right: 20px; 
+                flex-direction: column; 
+                align-items: flex-end; 
+                gap: 12px; 
+            }
+            .slider-timeline { width: 100px; }
+            .slider-counter { font-size: 12px; }
+            .nav-btn { width: 36px; height: 36px; font-size: 16px; }
+            
+            .detail-content { padding: 0 20px; }
+            .detail-title { font-size: 32px; line-height: 1.1; }
+            .detail-subtitle { font-size: 16px; margin-bottom: 24px; }
+            .detail-buttons { flex-direction: column; gap: 12px; }
+            
+            .product-detail { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px; }
+            .product-info h1 { font-size: 32px; }
+            .product-price-large { font-size: 24px; }
+            .product-description { font-size: 14px; }
+            
+            .trailer-header { padding: 16px; }
+            .trailer-close, .trailer-minimize { padding: 6px 12px; font-size: 11px; }
+            
+            .cart-content { width: 95%; margin: 20px; }
+            .cart-header { padding: 20px; }
+            .cart-items { padding: 20px; }
+            .cart-total { padding: 20px; }
+            
+            .logo-upload-area { min-width: 300px; padding: 30px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .nav { padding: 0 16px; height: 60px; }
+            .logo-text { font-size: 12px; }
+            .cart-btn { padding: 6px 12px; font-size: 10px; }
+            .hero-slider { margin-top: 60px; }
+            .slide-content { padding: 0 16px; }
+            .slide-title { font-size: 28px; }
+            .slide-year { font-size: 14px; }
+            .btn { padding: 12px 20px; font-size: 11px; }
+            .main-content { padding: 0 16px; }
+            .section-title { font-size: 20px; }
+            .grid-4, .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .grid-5 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .movie-title, .award-title { font-size: 12px; }
+            .product-name { font-size: 11px; }
+            .product-price { font-size: 12px; }
+            .main-content .btn { padding: 4px 8px; font-size: 8px; }
+            .about-content { padding: 0 16px; }
+            .about-title { font-size: 24px; }
+            .about-subtitle { font-size: 15px; }
+            .about-description { font-size: 14px; }
+            .stat-number { font-size: 24px; }
+            .stat-label { font-size: 11px; }
+            
+            .logo-upload-area { min-width: 280px; padding: 20px 15px; }
+            .upload-title { font-size: 20px; }
+            .upload-dropzone { padding: 30px 15px; }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .card:hover { transform: none; }
+            .btn:hover { background: inherit; color: inherit; }
+            .nav-link:hover { opacity: 1; }
+            .btn { min-height: 44px; }
+            .nav-btn { min-width: 44px; min-height: 44px; }
+            .cart-btn { min-height: 40px; }
+            .quantity-btn { min-width: 44px; min-height: 44px; }
+            .trailer-close, .trailer-minimize { min-height: 44px; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                            <!-- 메인 카메라 렌즈 원형 -->
-                            <circle cx="200" cy="200" r="190" fill="black"/>
-                            
-                            <!-- 렌즈 내부 흰색 원 -->
-                            <circle cx="200" cy="200" r="120" fill="white"/>
-                            
-                            <!-- 렌즈 중앙 검은 원 -->
-                            <circle cx="200" cy="200" r="60" fill="black"/>
-                            
-                            <!-- 렌즈 중앙 작은 흰 원 -->
-                            <circle cx="200" cy="200" r="20" fill="white"/>
-                            
-                            <!-- 카메라 몸체 사각형 요소들 -->
-                            <rect x="20" y="80" width="80" height="40" fill="black" transform="rotate(-30 60 100)"/>
-                            <rect x="300" y="80" width="80" height="40" fill="black" transform="rotate(30 340 100)"/>
-                            <rect x="160" y="20" width="80" height="50" fill="black" transform="rotate(-10 200 45)"/>
-                            <rect x="170" y="330" width="60" height="40" fill="black" transform="rotate(15 200 350)"/>
-                            
-                            <!-- 추가 몸체 요소들 -->
-                            <rect x="10" y="170" width="50" height="60" fill="black"/>
-                            <rect x="340" y="170" width="50" height="60" fill="black"/>
-                            <rect x="180" y="10" width="40" height="30" fill="black"/>
-                            
-                            <!-- 작은 디테일 원들 -->
-                            <circle cx="120" cy="120" r="12" fill="black"/>
-                            <circle cx="280" cy="120" r="12" fill="black"/>
-                            <circle cx="100" cy="280" r="8" fill="black"/>
-                            <circle cx="300" cy="280" r="8" fill="black"/>
-                            
-                            <!-- 작은 사각형 디테일들 -->
-                            <rect x="70" y="250" width="20" height="20" fill="black" transform="rotate(45 80 260)"/>
-                            <rect x="310" y="250" width="20" height="20" fill="black" transform="rotate(45 320 260)"/>
-                            <rect x="360" y="190" width="15" height="20" fill="black"/>
-                            <rect x="25" y="190" width="15" height="20" fill="black"/>
-                            
-                            <!-- 추가 작은 요소들 -->
-                            <circle cx="150" cy="80" r="6" fill="black"/>
-                            <circle cx="250" cy="80" r="6" fill="black"/>
-                            <rect x="185" y="360" width="30" height="15" fill="black"/>
-                            
-                            <!-- 각진 요소들 -->
-                            <polygon points="80,150 120,130 140,170 100,190" fill="black"/>
-                            <polygon points="320,150 280,130 260,170 300,190" fill="black"/>
-                        </svg>
-                    </div>
-                    <span class="logo-text">LWEE FILM</span>
-                </a>
-                <nav>
-                    <ul>
-                        <li><a href="#home">홈</a></li>
-                        <li><a href="#about">소개</a></li>
-                        <li><a href="#portfolio">작품</a></li>
-                        <li><a href="#services">서비스</a></li>
-                        <li><a href="#contact">연락처</a></li>
-                    </ul>
-                </nav>
-            </div>
+    <!-- 로고 업로드 오버레이 -->
+    <div class="upload-overlay" id="upload-overlay" onclick="closeLogoUpload()"></div>
+    <div class="logo-upload-area" id="logo-upload-area">
+        <h3 class="upload-title">로고 업로드</h3>
+        <div class="upload-dropzone" id="upload-dropzone" onclick="document.getElementById('logo-file-input').click()">
+            <p>이미지를 드래그하거나 클릭하여 업로드하세요</p>
+            <small>PNG, JPG, SVG 파일 지원 (최대 2MB)</small>
         </div>
+        <input type="file" id="logo-file-input" accept="image/*" style="display: none;" onchange="handleLogoUpload(event)">
+        <div class="upload-buttons">
+            <button class="cancel-btn" onclick="closeLogoUpload()">취소</button>
+        </div>
+    </div>
+
+    <!-- 관리자 모드 토글 버튼 -->
+    <button class="admin-toggle" onclick="toggleAdminMode()">관리자 모드</button>
+
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-left">
+                <div class="logo-container" onclick="showPage('home')">
+                    <img class="logo-image" id="logo-image" src="" alt="" style="display: none;">
+                    <span class="logo-text" id="logo-text">LWEE FILM</span>
+                    <button class="logo-upload-btn" id="logo-upload-btn" onclick="openLogoUpload()">로고 변경</button>
+                </div>
+                <ul class="nav-menu">
+                    <li><a class="nav-link" onclick="showSection('about')">About</a></li>
+                    <li><a class="nav-link" onclick="showSection('movies')">Films</a></li>
+                    <li><a class="nav-link" onclick="showSection('coming-soon')">Coming Soon</a></li>
+                    <li><a class="nav-link" onclick="showSection('watch-now')">Watch Now</a></li>
+                    <li><a class="nav-link" onclick="showSection('awards')">Award Winners</a></li>
+                    <li><a class="nav-link" onclick="showSection('shop')">Shop</a></li>
+                </ul>
+            </div>
+            <button class="cart-btn" onclick="toggleCart()">
+                Cart
+                <span class="cart-count" id="cart-count">0</span>
+            </button>
+        </nav>
     </header>
 
-    <section id="home" class="hero">
-        <div class="hero-logo">
-            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <!-- 메인 카메라 렌즈 원형 -->
-                <circle cx="200" cy="200" r="190" fill="white" opacity="0.6"/>
-                
-                <!-- 렌즈 내부 원 -->
-                <circle cx="200" cy="200" r="120" fill="rgba(0,0,0,0.3)"/>
-                
-                <!-- 렌즈 중앙 원 -->
-                <circle cx="200" cy="200" r="60" fill="white" opacity="0.8"/>
-                
-                <!-- 렌즈 중앙 작은 원 -->
-                <circle cx="200" cy="200" r="20" fill="rgba(0,0,0,0.5)"/>
-                
-                <!-- 카메라 몸체 사각형 요소들 -->
-                <rect x="20" y="80" width="80" height="40" fill="white" opacity="0.4" transform="rotate(-30 60 100)"/>
-                <rect x="300" y="80" width="80" height="40" fill="white" opacity="0.4" transform="rotate(30 340 100)"/>
-                <rect x="160" y="20" width="80" height="50" fill="white" opacity="0.4" transform="rotate(-10 200 45)"/>
-                <rect x="170" y="330" width="60" height="40" fill="white" opacity="0.4" transform="rotate(15 200 350)"/>
-                
-                <!-- 추가 몸체 요소들 -->
-                <rect x="10" y="170" width="50" height="60" fill="white" opacity="0.4"/>
-                <rect x="340" y="170" width="50" height="60" fill="white" opacity="0.4"/>
-                <rect x="180" y="10" width="40" height="30" fill="white" opacity="0.4"/>
-                
-                <!-- 작은 디테일 원들 -->
-                <circle cx="120" cy="120" r="12" fill="white" opacity="0.4"/>
-                <circle cx="280" cy="120" r="12" fill="white" opacity="0.4"/>
-                <circle cx="100" cy="280" r="8" fill="white" opacity="0.4"/>
-                <circle cx="300" cy="280" r="8" fill="white" opacity="0.4"/>
-                
-                <!-- 작은 사각형 디테일들 -->
-                <rect x="70" y="250" width="20" height="20" fill="white" opacity="0.4" transform="rotate(45 80 260)"/>
-                <rect x="310" y="250" width="20" height="20" fill="white" opacity="0.4" transform="rotate(45 320 260)"/>
-                <rect x="360" y="190" width="15" height="20" fill="white" opacity="0.4"/>
-                <rect x="25" y="190" width="15" height="20" fill="white" opacity="0.4"/>
-                
-                <!-- 추가 작은 요소들 -->
-                <circle cx="150" cy="80" r="6" fill="white" opacity="0.4"/>
-                <circle cx="250" cy="80" r="6" fill="white" opacity="0.4"/>
-                <rect x="185" y="360" width="30" height="15" fill="white" opacity="0.4"/>
-                
-                <!-- 각진 요소들 -->
-                <polygon points="80,150 120,130 140,170 100,190" fill="white" opacity="0.4"/>
-                <polygon points="320,150 280,130 260,170 300,190" fill="white" opacity="0.4"/>
-            </svg>
-        </div>
-        <div class="hero-content">
-            <h1>LWEE FILM</h1>
-            <p>창의적인 스토리텔링과 혁신적인 영상 제작</p>
-            <a href="#portfolio" class="cta-button">
-                <span>작품 보기</span>
-            </a>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title fade-in">우리의 이야기</h2>
-            <div class="about-content">
-                <div class="about-text fade-in">
-                    <p>LWEE FILM은 창의적인 비전과 기술적 전문성을 결합하여 독특하고 감동적인 영상 작품을 제작하는 스튜디오입니다.</p>
-                    <br>
-                    <p>우리는 각각의 프로젝트에 열정과 혁신을 담아 관객들에게 잊을 수 없는 경험을 선사합니다. 단편 영화부터 다큐멘터리, 상업 영상까지 다양한 장르에서 탁월한 결과물을 만들어냅니다.</p>
-                    <br>
-                    <p>스토리텔링의 힘을 믿으며, 기술과 예술이 만나는 지점에서 새로운 가능성을 탐구합니다.</p>
-                </div>
-                <div class="about-image fade-in">
-                    <!-- 이미지 영역 -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-            <h2 class="section-title fade-in">대표 작품</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item fade-in">
-                    <div class="portfolio-info">
-                        <h3>도시의 꿈</h3>
-                        <p>2024 • 단편 영화</p>
-                    </div>
-                </div>
-                <div class="portfolio-item fade-in">
-                    <div class="portfolio-info">
-                        <h3>시간의 흔적</h3>
-                        <p>2024 • 다큐멘터리</p>
-                    </div>
-                </div>
-                <div class="portfolio-item fade-in">
-                    <div class="portfolio-info">
-                        <h3>새로운 시작</h3>
-                        <p>2023 • 뮤직 비디오</p>
-                    </div>
-                </div>
-                <div class="portfolio-item fade-in">
-                    <div class="portfolio-info">
-                        <h3>혁신의 바람</h3>
-                        <p>2023 • 기업 홍보영상</p>
-                    </div>
-                </div>
-                <div class="portfolio-item fade-in">
-                    <div class="portfolio-info">
-                        <h3>청춘의 노래</h3>
-                        <p>2023 • 단편 영화</p>
-                    </div>
-                </div>
-                <div class="portfolio-item fade-in">
-                    <div class="portfolio-info">
-                        <h3>자연과 인간</h3>
-                        <p>2022 • 다큐멘터리</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title fade-in">서비스</h2>
-            <div class="services-grid">
-                <div class="service-card fade-in">
-                    <div class="service-icon">🎬</div>
-                    <h3>영화 제작</h3>
-                    <p>단편 영화부터 장편 영화까지 완성도 높은 영화 제작 서비스를 제공합니다.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">📺</div>
-                    <h3>상업 영상</h3>
-                    <p>브랜드 가치를 높이는 창의적인 광고 영상과 홍보 영상을 제작합니다.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">🎵</div>
-                    <h3>뮤직 비디오</h3>
-                    <p>음악의 감성을 시각적으로 표현하는 독창적인 뮤직 비디오를 제작합니다.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">📖</div>
-                    <h3>다큐멘터리</h3>
-                    <p>진실한 이야기를 담은 의미 있는 다큐멘터리 제작을 전문으로 합니다.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">✂️</div>
-                    <h3>후반 작업</h3>
-                    <p>전문적인 편집, 컬러 그레이딩, 사운드 디자인 등 완성도 높은 후반 작업을 제공합니다.</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">💡</div>
-                    <h3>기획 및 컨설팅</h3>
-                    <p>아이디어 구상부터 제작까지 전 과정에 대한 전문적인 컨설팅을 제공합니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="logo">
-                        <div class="logo-icon">
-                            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                                <!-- 메인 카메라 렌즈 원형 -->
-                                <circle cx="200" cy="200" r="190" fill="white"/>
-                                
-                                <!-- 렌즈 내부 원 -->
-                                <circle cx="200" cy="200" r="120" fill="black"/>
-                                
-                                <!-- 렌즈 중앙 원 -->
-                                <circle cx="200" cy="200" r="60" fill="white"/>
-                                
-                                <!-- 렌즈 중앙 작은 원 -->
-                                <circle cx="200" cy="200" r="20" fill="black"/>
-                                
-                                <!-- 카메라 몸체 사각형 요소들 -->
-                                <rect x="20" y="80" width="80" height="40" fill="white" transform="rotate(-30 60 100)"/>
-                                <rect x="300" y="80" width="80" height="40" fill="white" transform="rotate(30 340 100)"/>
-                                <rect x="160" y="20" width="80" height="50" fill="white" transform="rotate(-10 200 45)"/>
-                                <rect x="170" y="330" width="60" height="40" fill="white" transform="rotate(15 200 350)"/>
-                                
-                                <!-- 추가 몸체 요소들 -->
-                                <rect x="10" y="170" width="50" height="60" fill="white"/>
-                                <rect x="340" y="170" width="50" height="60" fill="white"/>
-                                <rect x="180" y="10" width="40" height="30" fill="white"/>
-                                
-                                <!-- 작은 디테일 원들 -->
-                                <circle cx="120" cy="120" r="12" fill="white"/>
-                                <circle cx="280" cy="120" r="12" fill="white"/>
-                                <circle cx="100" cy="280" r="8" fill="white"/>
-                                <circle cx="300" cy="280" r="8" fill="white"/>
-                                
-                                <!-- 작은 사각형 디테일들 -->
-                                <rect x="70" y="250" width="20" height="20" fill="white" transform="rotate(45 80 260)"/>
-                                <rect x="310" y="250" width="20" height="20" fill="white" transform="rotate(45 320 260)"/>
-                                <rect x="360" y="190" width="15" height="20" fill="white"/>
-                                <rect x="25" y="190" width="15" height="20" fill="white"/>
-                                
-                                <!-- 추가 작은 요소들 -->
-                                <circle cx="150" cy="80" r="6" fill="white"/>
-                                <circle cx="250" cy="80" r="6" fill="white"/>
-                                <rect x="185" y="360" width="30" height="15" fill="white"/>
-                                
-                                <!-- 각진 요소들 -->
-                                <polygon points="80,150 120,130 140,170 100,190" fill="white"/>
-                                <polygon points="320,150 280,130 260,170 300,190" fill="white"/>
-                            </svg>
+    <div id="home" class="page active">
+        <section class="hero-slider">
+            <div class="slide active" data-movie="diaspora">
+                <div class="slide-content">
+                    <div class="slide-info">
+                        <div class="slide-status">Now Available</div>
+                        <h1 class="slide-title">The Diaspora</h1>
+                        <div class="slide-year">2024</div>
+                        <div class="slide-buttons">
+                            <button class="btn btn-primary slide-watch-btn">Watch Now</button>
+                            <button class="btn slide-trailer-btn">Play Trailer</button>
                         </div>
-                        <span class="logo-text">LWEE FILM</span>
-                    </div>
-                    <p>창의적인 스토리텔링과<br>혁신적인 영상 제작</p>
-                </div>
-                <div class="footer-section">
-                    <h3>연락처</h3>
-                    <p>이메일: contact@lweefilm.com</p>
-                    <p>전화: +82-2-1234-5678</p>
-                    <p>주소: 서울시 강남구 영동대로 123</p>
-                </div>
-                <div class="footer-section">
-                    <h3>팔로우</h3>
-                    <div class="social-links">
-                        <a href="#">📷</a>
-                        <a href="#">🎬</a>
-                        <a href="#">📺</a>
-                        <a href="#">💼</a>
                     </div>
                 </div>
             </div>
-            <p>&copy; 2024 LWEE FILM. All rights reserved.</p>
-        </div>
-    </footer>
 
-    <script src="script.js"></script>
+            <div class="slide" data-movie="fishbowl">
+                <div class="slide-content">
+                    <div class="slide-info">
+                        <div class="slide-status">Featured Film</div>
+                        <h1 class="slide-title">어항</h1>
+                        <div class="slide-year">2024</div>
+                        <div class="slide-buttons">
+                            <button class="btn btn-primary slide-watch-btn">Watch Now</button>
+                            <button class="btn slide-trailer-btn">Play Trailer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-controls">
+                <div class="slider-counter">
+                    <span class="current-slide">1</span> / <span class="total-slides">2</span>
+                </div>
+                <div class="slider-timeline">
+                    <div class="timeline-progress"></div>
+                </div>
+                <div class="slider-dots">
+                    <div class="dot active" data-slide="0"></div>
+                    <div class="dot" data-slide="1"></div>
+                </div>
+                <div class="slider-nav">
+                    <button class="nav-btn prev-btn">‹</button>
+                    <button class="nav-btn next-btn">›</button>
+                </div>
+            </div>
+        </section>
+
+        <main class="main-content">
+            <section class="about-section" id="about">
+                <div class="about-content">
+                    <h2 class="about-title">LWEE FILM</h2>
+                    <p class="about-subtitle">
+                        창의적인 스토리텔링으로 세상을 변화시키는 독립 영화 제작사
+                    </p>
+                    <div class="about-description">
+                        <p>LWEE FILM은 2020년에 설립된 독립 영화 제작사로, 혁신적이고 의미 있는 콘텐츠를 통해 관객들에게 새로운 시각과 감동을 전달하고 있습니다. 우리는 다양한 장르와 스타일을 아우르며, 신진 감독들과 함께 창작의 경계를 넓혀가고 있습니다.</p>
+                        
+                        <p>각 작품은 단순한 엔터테인먼트를 넘어서 사회적 메시지와 인간의 본질에 대한 깊이 있는 탐구를 담고 있습니다. 디아스포라, 어항과 같은 대표작들을 통해 현대 사회의 복잡한 이슈들을 섬세하게 다루며, 국내외 영화제에서 주목받는 작품들을 지속적으로 선보이고 있습니다.</p>
+                    </div>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">제작 작품 수</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">국제 영화제 수상</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">전 세계 관객</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" id="shop">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">The Diaspora Collection</h2>
+                        <div class="section-subtitle">The Diaspora Collection -</div>
+                    </div>
+                    <a class="section-link" onclick="showCollection('diaspora')">See More</a>
+                </div>
+                <div class="grid-4">
+                    <div class="card" onclick="showProductDetail('diaspora-hoodie')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">👕</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">THE DIASPORA Hoodie</div>
+                        <div class="product-price">$75 <span class="product-currency">USD</span></div>
+                    </div>
+                    <div class="card" onclick="showProductDetail('diaspora-bag')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">🎒</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">THE DIASPORA Tote Bag</div>
+                        <div class="product-price">$35 <span class="product-currency">USD</span></div>
+                    </div>
+                    <div class="card" onclick="showProductDetail('diaspora-poster')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">🖼️</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">THE DIASPORA Poster</div>
+                        <div class="product-price">$25 <span class="product-currency">USD</span></div>
+                    </div>
+                    <div class="card" onclick="showProductDetail('diaspora-tshirt')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">👕</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">THE DIASPORA T-Shirt</div>
+                        <div class="product-price">$30 <span class="product-currency">USD</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" id="coming-soon">
+                <div class="section-header">
+                    <h2 class="section-title">Coming Soon</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="card" onclick="showMovieDetail('diaspora')">
+                        <div class="card-image movie-image diaspora"></div>
+                        <div class="movie-status">Now Available</div>
+                        <div class="movie-title">The Diaspora</div>
+                        <div class="movie-year">2024</div>
+                        <div class="movie-buttons">
+                            <button class="btn" onclick="event.stopPropagation(); showTrailer('diaspora')">Play Trailer</button>
+                        </div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('fishbowl')">
+                        <div class="card-image movie-image fishbowl"></div>
+                        <div class="movie-status">Featured Film</div>
+                        <div class="movie-title">어항</div>
+                        <div class="movie-year">2024</div>
+                        <div class="movie-buttons">
+                            <button class="btn" onclick="event.stopPropagation(); showTrailer('fishbowl')">Play Trailer</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">어항 Collection</h2>
+                    </div>
+                    <a class="section-link" onclick="showCollection('fishbowl')">View All</a>
+                </div>
+                <div class="grid-4">
+                    <div class="card" onclick="showProductDetail('fishbowl-figurine')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">🐠</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">어항 Fish Figurine</div>
+                        <div class="product-price">$45 <span class="product-currency">USD</span></div>
+                    </div>
+                    <div class="card" onclick="showProductDetail('fishbowl-tshirt')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">👕</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">어항 T-Shirt</div>
+                        <div class="product-price">$28 <span class="product-currency">USD</span></div>
+                    </div>
+                    <div class="card" onclick="showProductDetail('fishbowl-mug')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">☕</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">어항 Coffee Mug</div>
+                        <div class="product-price">$18 <span class="product-currency">USD</span></div>
+                    </div>
+                    <div class="card" onclick="showProductDetail('fishbowl-notebook')">
+                        <div class="card-image product-image">
+                            <div class="card-placeholder">📓</div>
+                        </div>
+                        <div class="product-status">Pre-Order Now</div>
+                        <div class="product-name">어항 Notebook</div>
+                        <div class="product-price">$22 <span class="product-currency">USD</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" id="watch-now">
+                <div class="section-header">
+                    <h2 class="section-title">Watch Now</h2>
+                </div>
+                <div class="grid-auto">
+                    <div class="card" onclick="showMovieDetail('diaspora')">
+                        <div class="card-image movie-image diaspora"></div>
+                        <div class="movie-status">Now Available</div>
+                        <div class="movie-title">The Diaspora</div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('fishbowl')">
+                        <div class="card-image movie-image fishbowl"></div>
+                        <div class="movie-status">Now Available</div>
+                        <div class="movie-title">어항</div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('spring-dreams')">
+                        <div class="card-image movie-image spring-dreams"></div>
+                        <div class="movie-status">Now Available</div>
+                        <div class="movie-title">Spring Dreams</div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('urban-tales')">
+                        <div class="card-image movie-image urban-tales"></div>
+                        <div class="movie-status">Now Available</div>
+                        <div class="movie-title">Urban Tales</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" id="awards">
+                <div class="section-header">
+                    <h2 class="section-title">Award Winners</h2>
+                </div>
+                <div class="grid-5">
+                    <div class="card" onclick="showMovieDetail('diaspora')">
+                        <div class="card-image award-image diaspora"></div>
+                        <div class="award-status">Now Available</div>
+                        <div class="award-title">The Diaspora</div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('fishbowl')">
+                        <div class="card-image award-image fishbowl"></div>
+                        <div class="award-status">Now Available</div>
+                        <div class="award-title">어항</div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('memories')">
+                        <div class="card-image award-image memories"></div>
+                        <div class="award-status">Now Available</div>
+                        <div class="award-title">Memories</div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('silence')">
+                        <div class="card-image award-image silence"></div>
+                        <div class="award-status">Now Available</div>
+                        <div class="award-title">Silence</div>
+                    </div>
+                    <div class="card" onclick="showMovieDetail('journey')">
+                        <div class="card-image award-image journey"></div>
+                        <div class="award-status">Now Available</div>
+                        <div class="award-title">Journey</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">LWEE FILM © 2024. All Rights Reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    <div id="product-detail" class="page detail-page">
+        <div class="detail-hero" id="product-hero">
+            <div class="detail-content">
+                <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+            </div>
+        </div>
+        
+        <div class="product-detail">
+            <div class="product-image-large" id="product-image-large"></div>
+            <div class="product-info">
+                <h1 id="product-title">Product Name</h1>
+                <div class="product-price-large" id="product-price-large">$0.00 USD</div>
+                <div class="product-description" id="product-description">
+                    This is a premium quality product from our exclusive collection. 
+                    Made with the finest materials and attention to detail.
+                </div>
+                
+                <div class="quantity-selector">
+                    <span class="quantity-label">Quantity:</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                        <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="10">
+                        <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                    </div>
+                </div>
+                
+                <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="movie-detail" class="page detail-page">
+        <div class="detail-hero" id="movie-hero">
+            <div class="detail-content">
+                <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+                <h1 class="detail-title" id="movie-title">Movie Title</h1>
+                <div class="detail-subtitle" id="movie-subtitle">2024 • Drama</div>
+                <div class="detail-buttons">
+                    <button class="btn btn-primary" id="watch-btn">Watch Now</button>
+                    <button class="btn" id="trailer-btn">Play Trailer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="trailer-page" class="page trailer-page">
+        <div class="trailer-header">
+            <div class="trailer-info" id="trailer-info">영화 트레일러</div>
+            <div class="trailer-controls">
+                <button class="trailer-minimize" onclick="minimizeTrailer()">Minimize</button>
+                <button class="trailer-close" onclick="closeTrailer()">Close</button>
+            </div>
+        </div>
+        
+        <div class="video-player" id="video-player" onclick="playTrailer()">
+            <div class="video-placeholder" id="video-placeholder">
+                <button class="play-button">▶</button>
+                <div style="font-size: 24px; margin-bottom: 8px;" id="trailer-movie-title">영화 트레일러</div>
+                <small style="font-size: 16px; opacity: 0.7;">클릭하여 트레일러 재생</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <div class="empty-cart">Your cart is empty</div>
+            </div>
+            <div class="cart-total" id="cart-total" style="display: none;">
+                <div class="cart-total-price" id="total-price">$0.00 USD</div>
+                <button class="checkout-btn" onclick="checkout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        let cart = [];
+        let currentProduct = null;
+        let currentTrailerMovie = null;
+        let slideInterval;
+        let isAdminMode = false;
+
+        const products = {
+            'diaspora-hoodie': {
+                name: 'THE DIASPORA Hoodie',
+                price: 75,
+                image: '👕',
+                description: 'Premium quality hoodie from The Diaspora collection. Made with 100% organic cotton and featuring exclusive artwork from the film.'
+            },
+            'diaspora-bag': {
+                name: 'THE DIASPORA Tote Bag',
+                price: 35,
+                image: '🎒',
+                description: 'Stylish tote bag perfect for everyday use. Features minimalist design inspired by The Diaspora aesthetic.'
+            },
+            'diaspora-poster': {
+                name: 'THE DIASPORA Poster',
+                price: 25,
+                image: '🖼️',
+                description: 'High-quality art print of the official movie poster. Perfect for decorating your space with cinematic art.'
+            },
+            'diaspora-tshirt': {
+                name: 'THE DIASPORA T-Shirt',
+                price: 30,
+                image: '👕',
+                description: 'Comfortable cotton t-shirt with subtle branding. Available in multiple sizes and colors.'
+            },
+            'fishbowl-figurine': {
+                name: '어항 Fish Figurine',
+                price: 45,
+                image: '🐠',
+                description: 'Collectible figurine inspired by the symbolic fish from 어항. Handcrafted with attention to detail.'
+            },
+            'fishbowl-tshirt': {
+                name: '어항 T-Shirt',
+                price: 28,
+                image: '👕',
+                description: 'Soft cotton t-shirt featuring artwork from 어항. Comfortable fit with artistic design.'
+            },
+            'fishbowl-mug': {
+                name: '어항 Coffee Mug',
+                price: 18,
+                image: '☕',
+                description: 'Ceramic coffee mug with beautiful 어항 motifs. Perfect for your morning coffee or tea.'
+            },
+            'fishbowl-notebook': {
+                name: '어항 Notebook',
+                price: 22,
+                image: '📓',
+                description: 'Premium notebook with 어항-inspired cover design. Perfect for writing, sketching, or journaling.'
+            }
+        };
+
+        const movies = {
+            'diaspora': {
+                title: 'The Diaspora',
+                subtitle: '2024 • Drama • 120 min',
+                hero: 'https://raw.githubusercontent.com/yonseiarts/chine-film-images/main/diaspora2.jpg',
+                trailer: 'https://www.youtube.com/watch?v=zrk1Dc8XSNs',
+                trailerEmbed: 'https://www.youtube.com/embed/zrk1Dc8XSNs?autoplay=1&rel=0&modestbranding=1'
+            },
+            'fishbowl': {
+                title: '어항',
+                subtitle: '2024 • Drama • 95 min',
+                hero: 'https://raw.githubusercontent.com/yonseiarts/chine-film-images/main/Fish bowl2.jpg',
+                trailer: 'https://www.youtube.com/watch?v=gRtc6tfjykU',
+                trailerEmbed: 'https://www.youtube.com/embed/gRtc6tfjykU?autoplay=1&rel=0&modestbranding=1'
+            },
+            'spring-dreams': {
+                title: 'Spring Dreams',
+                subtitle: '2024 • Romance • 110 min',
+                hero: 'https://picsum.photos/1920/1080?random=7',
+                trailer: 'https://www.youtube.com/watch?v=GHI789RST',
+                trailerEmbed: 'https://www.youtube.com/embed/GHI789RST?autoplay=1&rel=0&modestbranding=1'
+            },
+            'urban-tales': {
+                title: 'Urban Tales',
+                subtitle: '2024 • Action • 130 min',
+                hero: 'https://picsum.photos/1920/1080?random=8',
+                trailer: 'https://www.youtube.com/watch?v=JKL012MNO',
+                trailerEmbed: 'https://www.youtube.com/embed/JKL012MNO?autoplay=1&rel=0&modestbranding=1'
+            },
+            'memories': {
+                title: 'Memories',
+                subtitle: '2023 • Drama • 105 min',
+                hero: 'https://picsum.photos/1920/1080?random=9',
+                trailer: 'https://www.youtube.com/watch?v=PQR345STU',
+                trailerEmbed: 'https://www.youtube.com/embed/PQR345STU?autoplay=1&rel=0&modestbranding=1'
+            },
+            'silence': {
+                title: 'Silence',
+                subtitle: '2023 • Thriller • 98 min',
+                hero: 'https://picsum.photos/1920/1080?random=10',
+                trailer: 'https://www.youtube.com/watch?v=VWX678YZA',
+                trailerEmbed: 'https://www.youtube.com/embed/VWX678YZA?autoplay=1&rel=0&modestbranding=1'
+            },
+            'journey': {
+                title: 'Journey',
+                subtitle: '2023 • Adventure • 140 min',
+                hero: 'https://picsum.photos/1920/1080?random=11',
+                trailer: 'https://www.youtube.com/watch?v=BCD901EFG',
+                trailerEmbed: 'https://www.youtube.com/embed/BCD901EFG?autoplay=1&rel=0&modestbranding=1'
+            }
+        };
+
+        // 관리자 모드 토글
+        function toggleAdminMode() {
+            isAdminMode = !isAdminMode;
+            const logoUploadBtn = document.getElementById('logo-upload-btn');
+            const adminToggle = document.querySelector('.admin-toggle');
+            
+            if (isAdminMode) {
+                logoUploadBtn.style.display = 'inline-block';
+                adminToggle.textContent = '일반 모드';
+                adminToggle.style.background = 'rgba(255, 0, 0, 0.1)';
+                adminToggle.style.borderColor = 'rgba(255, 0, 0, 0.3)';
+            } else {
+                logoUploadBtn.style.display = 'none';
+                adminToggle.textContent = '관리자 모드';
+                adminToggle.style.background = 'rgba(255, 255, 255, 0.1)';
+                adminToggle.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            }
+        }
+
+        // 로고 업로드 관련 함수들
+        function openLogoUpload() {
+            if (!isAdminMode) return;
+            
+            document.getElementById('upload-overlay').classList.add('active');
+            document.getElementById('logo-upload-area').classList.add('active');
+        }
+
+        function closeLogoUpload() {
+            document.getElementById('upload-overlay').classList.remove('active');
+            document.getElementById('logo-upload-area').classList.remove('active');
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // 파일 크기 체크 (2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('파일 크기가 2MB를 초과합니다.');
+                return;
+            }
+
+            // 파일 타입 체크
+            if (!file.type.startsWith('image/')) {
+                alert('이미지 파일만 업로드 가능합니다.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const logoImage = document.getElementById('logo-image');
+                const logoText = document.getElementById('logo-text');
+                
+                logoImage.src = e.target.result;
+                logoImage.style.display = 'block';
+                logoText.style.display = 'none';
+                
+                // 로컬 스토리지에 저장 (실제 서비스에서는 서버 업로드 필요)
+                localStorage.setItem('lweeFilmLogo', e.target.result);
+                
+                closeLogoUpload();
+                alert('로고가 성공적으로 업로드되었습니다!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 드래그 앤 드롭 기능
+        function setupDragAndDrop() {
+            const dropzone = document.getElementById('upload-dropzone');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                dropzone.classList.add('dragover');
+            }
+
+            function unhighlight(e) {
+                dropzone.classList.remove('dragover');
+            }
+
+            dropzone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    const event = { target: { files: [files[0]] } };
+                    handleLogoUpload(event);
+                }
+            }
+        }
+
+        // 페이지 로드 시 저장된 로고 불러오기
+        function loadSavedLogo() {
+            const savedLogo = localStorage.getItem('lweeFilmLogo');
+            if (savedLogo) {
+                const logoImage = document.getElementById('logo-image');
+                const logoText = document.getElementById('logo-text');
+                
+                logoImage.src = savedLogo;
+                logoImage.style.display = 'block';
+                logoText.style.display = 'none';
+            }
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            if (pageId === 'home') {
+                setTimeout(() => {
+                    currentSlide = 0;
+                    const slides = document.querySelectorAll('.slide');
+                    const dots = document.querySelectorAll('.dot');
+                    
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    
+                    if (slides[0]) slides[0].classList.add('active');
+                    if (dots[0]) dots[0].classList.add('active');
+                    
+                    updateSliderCounter();
+                    updateSliderButtons();
+                }, 100);
+            }
+        }
+
+        function showSection(sectionId) {
+            showPage('home');
+            setTimeout(() => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        function showProductDetail(productId) {
+            const product = products[productId];
+            if (!product) return;
+
+            currentProduct = productId;
+            document.getElementById('product-title').textContent = product.name;
+            document.getElementById('product-price-large').textContent = `${product.price} USD`;
+            document.getElementById('product-description').textContent = product.description;
+            
+            const imageEl = document.getElementById('product-image-large');
+            imageEl.innerHTML = `<div class="card-placeholder">${product.image}</div>`;
+            
+            document.getElementById('quantity').value = 1;
+            showPage('product-detail');
+        }
+
+        function showMovieDetail(movieId) {
+            const movie = movies[movieId];
+            if (!movie) return;
+
+            const heroEl = document.getElementById('movie-hero');
+            heroEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('${movie.hero}')`;
+            
+            document.getElementById('movie-title').textContent = movie.title;
+            document.getElementById('movie-subtitle').textContent = movie.subtitle;
+            
+            document.getElementById('trailer-btn').onclick = () => showTrailer(movieId);
+            
+            showPage('movie-detail');
+        }
+
+        function showTrailer(movieId) {
+            const movie = movies[movieId];
+            if (!movie) return;
+
+            currentTrailerMovie = movieId;
+            
+            document.getElementById('trailer-info').textContent = movie.title.toUpperCase();
+            document.getElementById('trailer-movie-title').textContent = `${movie.title} 트레일러`;
+            
+            const videoPlayer = document.getElementById('video-player');
+            videoPlayer.innerHTML = `
+                <div class="video-placeholder" id="video-placeholder" onclick="playTrailer()">
+                    <button class="play-button">▶</button>
+                    <div style="font-size: 24px; margin-bottom: 8px;">${movie.title} 트레일러</div>
+                    <small style="font-size: 16px; opacity: 0.7;">클릭하여 트레일러 재생</small>
+                </div>
+            `;
+            
+            showPage('trailer-page');
+        }
+
+        function playTrailer() {
+            const movie = movies[currentTrailerMovie];
+            if (!movie) return;
+
+            const videoPlayer = document.getElementById('video-player');
+            videoPlayer.innerHTML = `
+                <iframe class="video-element" 
+                        src="${movie.trailerEmbed}" 
+                        allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        function minimizeTrailer() {
+            showPage('home');
+        }
+
+        function closeTrailer() {
+            const videoPlayer = document.getElementById('video-player');
+            const movie = movies[currentTrailerMovie];
+            if (movie) {
+                videoPlayer.innerHTML = `
+                    <div class="video-placeholder" id="video-placeholder">
+                        <button class="play-button">▶</button>
+                        <div style="font-size: 24px; margin-bottom: 8px;">${movie.title} 트레일러</div>
+                        <small style="font-size: 16px; opacity: 0.7;">클릭하여 트레일러 재생</small>
+                    </div>
+                `;
+            }
+            showPage('home');
+        }
+
+        function changeQuantity(delta) {
+            const quantityInput = document.getElementById('quantity');
+            let quantity = parseInt(quantityInput.value) + delta;
+            quantity = Math.max(1, Math.min(10, quantity));
+            quantityInput.value = quantity;
+        }
+
+        function addToCart() {
+            if (!currentProduct) return;
+            
+            const product = products[currentProduct];
+            const quantity = parseInt(document.getElementById('quantity').value);
+            
+            const existingItem = cart.find(item => item.id === currentProduct);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: currentProduct,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+            
+            updateCartUI();
+            alert(`${product.name} added to cart!`);
+        }
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cart-modal');
+            cartModal.classList.toggle('active');
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const totalPrice = document.getElementById('total-price');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                cartTotal.style.display = 'none';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <div class="card-placeholder">${item.image}</div>
+                        </div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">${item.price} USD</div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn" onclick="updateCartItemQuantity('${item.id}', -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateCartItemQuantity('${item.id}', 1)">+</button>
+                                <button onclick="removeFromCart('${item.id}')" style="margin-left: 12px; background: none; border: none; color: #ff0000; cursor: pointer;">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalPrice.textContent = `${total.toFixed(2)} USD`;
+                cartTotal.style.display = 'block';
+            }
+        }
+
+        function updateCartItemQuantity(productId, delta) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function checkout() {
+            alert('Checkout functionality would be implemented here!');
+        }
+
+        function showCollection(collectionId) {
+            showSection('shop');
+        }
+
+        // Slider functionality
+        function nextSlide() {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            
+            updateSliderCounter();
+            updateSliderButtons();
+            resetSliderProgress();
+        }
+
+        function prevSlide() {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            
+            updateSliderCounter();
+            updateSliderButtons();
+            resetSliderProgress();
+        }
+
+        function goToSlide(slideIndex) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = slideIndex;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            
+            updateSliderCounter();
+            updateSliderButtons();
+            resetSliderProgress();
+        }
+
+        function updateSliderCounter() {
+            document.querySelector('.current-slide').textContent = currentSlide + 1;
+        }
+
+        function updateSliderButtons() {
+            const slides = document.querySelectorAll('.slide');
+            
+            slides.forEach((slide, index) => {
+                const slideMovieId = slide.getAttribute('data-movie');
+                const watchBtn = slide.querySelector('.slide-watch-btn');
+                const trailerBtn = slide.querySelector('.slide-trailer-btn');
+                
+                if (watchBtn) {
+                    watchBtn.onclick = null;
+                    watchBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showMovieDetail(slideMovieId);
+                    });
+                }
+                
+                if (trailerBtn) {
+                    trailerBtn.onclick = null;
+                    trailerBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showTrailer(slideMovieId);
+                    });
+                }
+            });
+        }
+
+        function resetSliderProgress() {
+            const progressBar = document.querySelector('.timeline-progress');
+            progressBar.style.width = '0%';
+            
+            clearInterval(slideInterval);
+            startSliderProgress();
+        }
+
+        function startSliderProgress() {
+            let progress = 0;
+            const progressBar = document.querySelector('.timeline-progress');
+            
+            slideInterval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    nextSlide();
+                }
+            }, 80);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+            
+            currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+            });
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            if (slides[0]) slides[0].classList.add('active');
+            if (dots[0]) dots[0].classList.add('active');
+            
+            updateSliderCounter();
+            
+            setTimeout(() => {
+                updateSliderButtons();
+            }, 100);
+            
+            // Slider navigation
+            document.querySelector('.next-btn').addEventListener('click', nextSlide);
+            document.querySelector('.prev-btn').addEventListener('click', prevSlide);
+            
+            // Slider dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.addEventListener('click', () => goToSlide(index));
+            });
+            
+            // ESC key to close trailer
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const trailerPage = document.getElementById('trailer-page');
+                    if (trailerPage.classList.contains('active')) {
+                        closeTrailer();
+                    }
+                    
+                    // ESC로 로고 업로드 모달 닫기
+                    const uploadArea = document.getElementById('logo-upload-area');
+                    if (uploadArea.classList.contains('active')) {
+                        closeLogoUpload();
+                    }
+                }
+            });
+            
+            // Start slider
+            startSliderProgress();
+            
+            // Cart modal click outside to close
+            document.getElementById('cart-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    toggleCart();
+                }
+            });
+            
+            // 드래그 앤 드롭 설정
+            setupDragAndDrop();
+            
+            // 저장된 로고 불러오기
+            loadSavedLogo();
+        });
+    </script>
 </body>
 </html>
